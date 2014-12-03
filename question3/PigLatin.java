@@ -30,7 +30,25 @@ public class PigLatin{
             }
             else 
             {   //get index of first vowel
-               	
+               	for (int k=0; k<a.length();k++)
+               	{
+               		char n = a.charAt(k);
+               		System.out.println("ch= "+n);
+               		if (isVowel(n)) {
+               			System.out.println("At last! A vowel! --> "+n);
+               			break;
+               		}
+               		else
+               		{
+               			System.out.println(n+" is not a vowel");
+               			firstVowelIndex++;
+               			origPrefix+=n;
+               			if (origPrefix.equals(a)){
+               				System.out.println("At this moment, origPrefix equals a");
+               			}
+               			System.out.println("origPrefix is now\t"+origPrefix+"\ta is "+a);
+               		}
+               	}
             }
         }
 
