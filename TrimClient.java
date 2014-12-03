@@ -1,16 +1,13 @@
-
 /**
  * TrimClient
- * Reads strings and returns a copy of the same strings with
- * leading and trailing whitespace omitted.  
- * Uses the services of TrimServer.
+ * Reads strings and returns similar string with whitespace omitted. 
  * 
  * Invoke as: java TrimClient [-port=<number>] [server]
  * Default port is 1200, if not specified 
  * Default host is localhost, if not specified
  * 
  * @author (Lior Shahverdi) 
- * @version (Version 1.1 12/2/2014)
+ * @version (Version 1.1 12/02/2014)
  */
 import java.io.*; 
 import java.net.*; 

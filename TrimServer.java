@@ -1,13 +1,12 @@
 /**
  * TrimServer
- * Accepts strings and returns them with leading and
- * trailing whitespace omitted.  
+ * Accepts strings and returns similar string with whitespaces omitted.  
  * 
  * Invoke as: java TrimServer [-port=<number>] 
  * Default port is 1200, if not specified 
  * 
  * @author (Lior Shahverdi) 
- * @version (Version 1.1 12/2/2014)
+ * @version (Version 1.1 01/10/2005)
  */
 import java.io.*; 
 import java.net.*; 
@@ -92,11 +91,10 @@ public class TrimServer
                     /*if (isPalindrome(clientInput))
                         serverResult = "\"" + clientInput + "\" is a palindrome";  
                     else 
-                        serverResult = "\"" + clientInput + "\" is not a palindrome";
-                    */
+                        serverResult = "\"" + clientInput + "\" is not a palindrome";*/
 
-                    //Return a trimmed version of the string provided as input
-                    serverResult = "\"" +trimmed(clientInput) +"\"";
+                    //Convert to trimmed version of string
+                    serverResult = "\"" + clientInput.trim() + "\"";    
 
                     //Log work done 
                     System.out.println("Server received: " 
@@ -122,5 +120,4 @@ public class TrimServer
             }
         } 
     }    
-    private static String trimmed (String str){ return str.trim(); }
 }
