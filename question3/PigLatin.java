@@ -14,12 +14,13 @@ public class PigLatin{
 		System.out.println("Out-> "+ output);
 	}
 	
-	 public static String translate (String[] tokens)
+	public static String translate (String[] tokens)
     {
         String temp = "";
 
         //convert each string in the phrase to pig latin
         for (String a : tokens){
+        	boolean foundVowel = false;
             int firstVowelIndex = 0;
             String origPrefix = "";
             if (startsWithVowel(a))
@@ -29,16 +30,7 @@ public class PigLatin{
             }
             else 
             {   //get index of first vowel
-                char nextChar = '0';
-                while (!isVowel(nextChar)){
-                	nextChar = a.charAt(firstVowelIndex);
-                	if (isVowel(nextChar)) break;
-               		origPrefix += nextChar;
-               		firstVowelIndex++;
-                }
-                String pgStr = a.substring(firstVowelIndex);
-            	pgStr += origPrefix+"ay";
-                temp += pgStr+" ";
+               	
             }
         }
 

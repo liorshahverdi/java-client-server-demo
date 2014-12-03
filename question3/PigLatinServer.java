@@ -102,6 +102,7 @@ public class PigLatinServer
                     socketOut.println(serverResult); 
                     //Get new string
                     clientInput = socketIn.readLine(); 
+                    clientInputTokens = clientInput.split(" ");
                 }  
                 //Close all streams, socket and report 
                 socketIn.close(); 
@@ -128,21 +129,19 @@ public class PigLatinServer
             int firstVowelIndex = 0;
             String origPrefix = "";
             if (startsWithVowel(a))
-            {   //string started with a vowel so we simply append "way"
+            { 
                 String startedWithAVowel = a+"way";
                 temp += startedWithAVowel+" "; 
             }
             else 
             {   //get index of first vowel
-                char nextChar = '0';
-                while (!isVowel(nextChar)){
-                    nextChar = a.charAt(firstVowelIndex);
-                    if (isVowel(nextChar)) break;//found first vowel
-                    origPrefix += nextChar;//append character to original prefix
-                    firstVowelIndex++;
+                for (int k=0; k<a.length(); k++)
+                {
+                    char nextChar = a.charAt(k);
+                    if (isVowel(nextChar)) break;
+                    origPrefix += nextChar;
                 }
-                String pgStr = a.substring(firstVowelIndex);//extract the substring starting from the first vowel to the
-                //end of the string
+                String pgStr = a.substring(firstVowelIndex);
                 pgStr += origPrefix+"ay";
                 temp += pgStr+" ";
             }
