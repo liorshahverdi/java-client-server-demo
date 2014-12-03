@@ -20,35 +20,47 @@ public class PigLatin{
 
         //convert each string in the phrase to pig latin
         for (String a : tokens){
-        	boolean foundVowel = false;
-            int firstVowelIndex = 0;
+        	boolean firstCharUppercase = false;
             String origPrefix = "";
+            int vowelIndex = -1;
             if (startsWithVowel(a))
             { 
                 String startedWithAVowel = a+"way";
                 temp += startedWithAVowel+" "; 
             }
-            else 
-            {   //get index of first vowel
+            else //starts with one or more consonants
+            {   //get index of first vowel if its there.
+
+            	String res = null;
                	for (int k=0; k<a.length();k++)
                	{
-               		char n = a.charAt(k);
-               		System.out.println("ch= "+n);
-               		if (isVowel(n)) {
-               			System.out.println("At last! A vowel! --> "+n);
-               			break;
+               		char nextChar = a.charAt(k); //extract next character from token
+               		
+               		if (k==0 && isUpperCase(nextChar))firstCharUppercase = true;
+
+               		if (!isVowel(nextChar))
+               		{	//accumulate consonants up to first vowel
+               			origPrefix += nextChar;
+               			continue;
                		}
                		else
-               		{
-               			System.out.println(n+" is not a vowel");
-               			firstVowelIndex++;
-               			origPrefix+=n;
-               			if (origPrefix.equals(a)){
-               				System.out.println("At this moment, origPrefix equals a");
-               			}
-               			System.out.println("origPrefix is now\t"+origPrefix+"\ta is "+a);
+               		{	//found a vowel
+               			vowelIndex = k;
+               			res = a.substring(vowelIndex) + origPrefix + "ay";
+               			break;
                		}
+
                	}
+
+               	if (firstCharUppercase)
+               	{
+               		String first = ""+res.charAt(0);
+
+               		System.out.println("-->"+res);
+               	}
+
+               	//append current token to the phrase
+               	temp += res+" ";
             }
         }
 
@@ -75,8 +87,13 @@ public class PigLatin{
         else return false;
     }
 
-	public static void main(String[] args){
-		PigLatin p = new PigLatin();
+    public static boolean isUpperCase(char x)
+    {
+    	String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    	String test = ""+x;
+    	if (alpha.contains(test)) return true;
+    	else return false;	
+    }
 
-	}
+	public static void main(String[] args){PigLatin p = new PigLatin();}
 }
