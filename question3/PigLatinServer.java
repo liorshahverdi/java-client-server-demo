@@ -117,9 +117,57 @@ public class PigLatinServer
         } 
     }  
 
-    public static String translate (String[] tokens){
-        String temp = null;
+    //accepts an array of strings and returns a string phrase with
+    //the pig latin equivalent
+    public static String translate (String[] tokens)
+    {
+        String temp = "";
+
+        //convert each string in the phrase to pig latin
+        for (String a : tokens){
+            int firstVowelIndex = 0;
+            String origPrefix = "";
+            if (startsWithVowel(a))
+            {   //string started with a vowel so we simply append "way"
+                String startedWithAVowel = a+"way";
+                temp += startedWithAVowel+" "; 
+            }
+            else 
+            {   //get index of first vowel
+                char nextChar = '0';
+                while (!isVowel(nextChar)){
+                    nextChar = a.charAt(firstVowelIndex);
+                    if (isVowel(nextChar)) break;//found first vowel
+                    origPrefix += nextChar;//append character to original prefix
+                    firstVowelIndex++;
+                }
+                String pgStr = a.substring(firstVowelIndex);//extract the substring starting from the first vowel to the
+                //end of the string
+                pgStr += origPrefix+"ay";
+                temp += pgStr+" ";
+            }
+        }
 
         return temp;
-    }  
+    } 
+
+    public static boolean isVowel(char s)
+    {
+        if ((s =='a') || (s == 'A') ||
+            (s =='e') || (s == 'E') ||
+            (s =='i') || (s == 'I') ||
+            (s =='o')  || (s == 'O') ||
+            (s =='u')  || (s == 'U')) return true;
+        else return false;
+    }
+
+    public static boolean startsWithVowel(String s)
+    {
+        if (s.startsWith("a") || s.startsWith("A") ||
+            s.startsWith("e") || s.startsWith("E") ||
+            s.startsWith("i") || s.startsWith("I") ||
+            s.startsWith("o") || s.startsWith("O") ||
+            s.startsWith("u") || s.startsWith("U") ) return true;
+        else return false;
+    }
 }
