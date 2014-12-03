@@ -123,30 +123,58 @@ public class PigLatinServer
     public static String translate (String[] tokens)
     {
         String temp = "";
-
         //convert each string in the phrase to pig latin
         for (String a : tokens){
-            int firstVowelIndex = 0;
+            boolean firstCharUppercase = false;
             String origPrefix = "";
+            int vowelIndex = -1;
             if (startsWithVowel(a))
             { 
                 String startedWithAVowel = a+"way";
                 temp += startedWithAVowel+" "; 
             }
-            else 
-            {   //get index of first vowel
-                for (int k=0; k<a.length(); k++)
+            else //starts with one or more consonants
+            {   //get index of first vowel if its there.
+
+                String result = null;
+                for (int k=0; k<a.length();k++)
                 {
-                    char nextChar = a.charAt(k);
-                    if (isVowel(nextChar)) break;
-                    origPrefix += nextChar;
+                    char nextChar = a.charAt(k); //extract next character from token
+                    
+                    //Make first character of token uppercase if needed
+                    if (k==0 && isUpperCase(nextChar))  firstCharUppercase = true;
+
+                    if (!isVowel(nextChar))
+                    {   //accumulate consonants up to first vowel
+                        origPrefix += nextChar;
+
+                        if (origPrefix.equals(a)){
+                            result = a+"ay";
+                            break;
+                        } 
+
+                        continue;
+                    }
+                    else
+                    {   //found a vowel
+                        vowelIndex = k;
+                        result = a.substring(vowelIndex) + origPrefix + "ay";
+                        break;
+                    }
                 }
-                String pgStr = a.substring(firstVowelIndex);
-                pgStr += origPrefix+"ay";
-                temp += pgStr+" ";
+                if (firstCharUppercase)
+                {
+                    String first = ""+result.charAt(0);
+                    first = first.toUpperCase();
+                    String rest = result.substring(1);
+                    rest = rest.toLowerCase();
+                    result = first+rest;
+                }
+
+                //append current token to the phrase
+                temp += result+" ";
             }
         }
-
         return temp;
     } 
 
@@ -168,5 +196,13 @@ public class PigLatinServer
             s.startsWith("o") || s.startsWith("O") ||
             s.startsWith("u") || s.startsWith("U") ) return true;
         else return false;
+    }
+
+    public static boolean isUpperCase(char x)
+    {
+        String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String test = ""+x;
+        if (alpha.contains(test)) return true;
+        else return false;  
     }
 }

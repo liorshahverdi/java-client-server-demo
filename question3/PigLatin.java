@@ -17,7 +17,6 @@ public class PigLatin{
 	public static String translate (String[] tokens)
     {
         String temp = "";
-
         //convert each string in the phrase to pig latin
         for (String a : tokens){
         	boolean firstCharUppercase = false;
@@ -31,12 +30,13 @@ public class PigLatin{
             else //starts with one or more consonants
             {   //get index of first vowel if its there.
 
-            	String res = null;
+            	String result = null;
                	for (int k=0; k<a.length();k++)
                	{
                		char nextChar = a.charAt(k); //extract next character from token
                		
-               		if (k==0 && isUpperCase(nextChar))firstCharUppercase = true;
+               		//Make first character of token uppercase if needed
+               		if (k==0 && isUpperCase(nextChar))	firstCharUppercase = true;
 
                		if (!isVowel(nextChar))
                		{	//accumulate consonants up to first vowel
@@ -46,24 +46,23 @@ public class PigLatin{
                		else
                		{	//found a vowel
                			vowelIndex = k;
-               			res = a.substring(vowelIndex) + origPrefix + "ay";
+               			result = a.substring(vowelIndex) + origPrefix + "ay";
                			break;
                		}
-
                	}
-
                	if (firstCharUppercase)
                	{
-               		String first = ""+res.charAt(0);
-
-               		System.out.println("-->"+res);
+               		String first = ""+result.charAt(0);
+               		first = first.toUpperCase();
+               		String rest = result.substring(1);
+               		rest = rest.toLowerCase();
+               		result = first+rest;
                	}
 
                	//append current token to the phrase
-               	temp += res+" ";
+               	temp += result+" ";
             }
         }
-
         return temp;
     } 
 
@@ -95,5 +94,5 @@ public class PigLatin{
     	else return false;	
     }
 
-	public static void main(String[] args){PigLatin p = new PigLatin();}
+	public static void main(String[] args){	PigLatin p = new PigLatin();}
 }
